@@ -29,10 +29,11 @@ end
 
 def send_MMS
   media, body = get_quote
+  body += media 
   begin
     @client.messages.create(
-      body: body,
-      media_url: media,
+      body: body + media,
+      # media_url: media,
       to: '+19542782210',
       from: '+12534263667'
     )
@@ -42,5 +43,7 @@ def send_MMS
   end
 
 end
+
+
 
 send_MMS
