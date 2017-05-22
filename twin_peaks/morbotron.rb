@@ -2,6 +2,7 @@ require 'twilio-ruby'
 require 'rufus-scheduler'
 require 'httparty'
 
+
 # Set up a client to talk to the Twilio REST API.
 account_sid = ENV["TWILIO_ACCOUNT_SID"] # Your Account SID from www.twilio.com/console
 auth_token = ENV["TWILIO_AUTH_TOKEN"] # Your Auth Token from www.twilio.com/console
@@ -26,4 +27,20 @@ def get_quote
   end
 end
 
-p get_quote
+def send_MMS
+  media, body = get_quote
+  begin
+    @client.messages.create(
+      body: body,
+      media_url: media,
+      to: '+19542782210',
+      from: '+12534263667'
+    )
+    puts "Message sent!"
+  rescue Twilio::Rest::RequestError => e
+    puts e.message
+  end
+
+end
+
+send_MMS
