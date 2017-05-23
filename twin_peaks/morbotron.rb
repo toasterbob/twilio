@@ -47,3 +47,6 @@ end
 
 
 send_MMS
+
+# export TWILIO_ACCOUNT_SID='AC9000df5c2a45339e34f4a91987ede62e'
+# export TWILIO_AUTH_TOKEN='7146dc5818abc5db009ab88bc24093d1'
