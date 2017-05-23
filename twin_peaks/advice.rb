@@ -19,8 +19,11 @@ def get_quote
     doc << line
   end
 
-  puts doc
-  puts JSON.parse(doc)
+  doc = JSON.parse(doc, :symbolize_names => true)
+  p doc[:slip][:advice]
+
+
+  # puts JSON.parse(doc)
   # if r.code == 200
   #   json = r.parsed_response
   #   #Extract the ep number and time stamp from API response.
