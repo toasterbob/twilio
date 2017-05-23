@@ -4,10 +4,9 @@ require 'httparty'
 require 'json'
 require 'open-uri'
 
-
 # Set up a client to talk to the Twilio REST API.
-account_sid = ENV["TWILIO_ACCOUNT_SID"] # Your Account SID from www.twilio.com/console
-auth_token = ENV["TWILIO_AUTH_TOKEN"] # Your Auth Token from www.twilio.com/console
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_AUTH_TOKEN"]
 @client = Twilio::REST::Client.new account_sid, auth_token
 
 def get_advice
@@ -23,13 +22,13 @@ def get_advice
     doc = JSON.parse(doc, :symbolize_names => true)
     advice = doc[:slip][:advice]
 
-
     return advice
   end
 
 end
 
 def send_MMS
+
   body = "Your daily advice: #{get_advice}"
 
   begin
