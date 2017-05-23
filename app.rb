@@ -49,7 +49,7 @@ end
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.every '24h' do
+scheduler.every '1m' do
   send_MMS
 end
 scheduler.join
