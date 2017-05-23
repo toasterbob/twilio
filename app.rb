@@ -3,6 +3,7 @@ require 'rufus-scheduler'
 require 'httparty'
 require 'json'
 require 'open-uri'
+require 'sinatra'
 
 # Set up a client to talk to the Twilio REST API.
 account_sid = ENV["TWILIO_ACCOUNT_SID"]
