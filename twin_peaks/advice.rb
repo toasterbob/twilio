@@ -10,52 +10,39 @@ account_sid = ENV["TWILIO_ACCOUNT_SID"] # Your Account SID from www.twilio.com/c
 auth_token = ENV["TWILIO_AUTH_TOKEN"] # Your Auth Token from www.twilio.com/console
 @client = Twilio::REST::Client.new account_sid, auth_token
 
-def get_quote
+def get_advice
   r = open('http://api.adviceslip.com/advice')
-  #check if our request had a valid response_body
 
-  doc = ""
-  r.each do |line|
-    doc << line
+  if r.status == 200
+    doc = ""
+    r.each do |line|
+      doc << line
+    end
+
+    doc = JSON.parse(doc, :symbolize_names => true)
+    advice = doc[:slip][:advice]
+    return advice
   end
 
-  doc = JSON.parse(doc, :symbolize_names => true)
-  p doc[:slip][:advice]
-
-
-  # puts JSON.parse(doc)
-  # if r.code == 200
-  #   json = r.parsed_response
-  #   #Extract the ep number and time stamp from API response.
-  #   _____, episode, timestamp = json["Frame"].values
-  #
-  #   #build a proper URL
-  #   image_url = "https://morbotron.com/meme" + episode + "/" + timestamp.to_s
-  #
-  #   # Combine each line of subtitles into one string, seperated by newlines.
-  #   caption = json["Subtitles"].map{|subtitle| subtitle["Content"]}.join("\n")
-  #
-  #   return image_url, caption
-  # end
 end
-get_quote
-# def send_MMS
-#   media, body = get_quote
-#   body += media
-#   begin
-#     @client.messages.create(
-#       body: body,
-#       # media_url: media,
-#       to: '+19542782210',
-#       from: '+12534263667'
-#     )
-#     puts "Message sent!"
-#   rescue Twilio::REST::RequestError => e
-#     puts e.message
-#   end
-#
-# end
-#
-#
-#
-# send_MMS
+
+def send_MMS
+  body = "Your daily advice: #{get_advice}"
+
+  begin
+    @client.messages.create(
+      body: body,
+      # media_url: media,
+      to: '+19542782210',
+      from: '+12534263667'
+    )
+    puts "Message sent!"
+  rescue Twilio::REST::RequestError => e
+    puts e.message
+  end
+
+end
+
+
+
+send_MMS
