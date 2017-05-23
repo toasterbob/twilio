@@ -1,6 +1,8 @@
 require 'twilio-ruby'
 require 'rufus-scheduler'
 require 'httparty'
+require 'json'
+require 'open-uri'
 
 
 # Set up a client to talk to the Twilio REST API.
@@ -9,9 +11,16 @@ auth_token = ENV["TWILIO_AUTH_TOKEN"] # Your Auth Token from www.twilio.com/cons
 @client = Twilio::REST::Client.new account_sid, auth_token
 
 def get_quote
-  r = HTTParty.get('https://www.allofthisisforyou.com/oldstuff/coop.html')
+  r = open('http://api.adviceslip.com/advice')
   #check if our request had a valid response_body
-  p r
+
+  doc = ""
+  r.each do |line|
+    doc << line
+  end
+
+  puts doc
+  puts JSON.parse(doc)
   # if r.code == 200
   #   json = r.parsed_response
   #   #Extract the ep number and time stamp from API response.
