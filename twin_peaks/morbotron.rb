@@ -29,16 +29,16 @@ end
 
 def send_MMS
   media, body = get_quote
-  body += media 
+  body += media
   begin
     @client.messages.create(
-      body: body + media,
+      body: body,
       # media_url: media,
       to: '+19542782210',
       from: '+12534263667'
     )
     puts "Message sent!"
-  rescue Twilio::Rest::RequestError => e
+  rescue Twilio::REST::RequestError => e
     puts e.message
   end
 
