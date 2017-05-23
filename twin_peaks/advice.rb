@@ -47,4 +47,9 @@ end
 
 
 
- send_MMS
+scheduler = Rufus::Scheduler.new
+
+scheduler.every '24h' do
+  send_MMS
+end
+scheduler.join
