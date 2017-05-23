@@ -13,14 +13,17 @@ auth_token = ENV["TWILIO_AUTH_TOKEN"] # Your Auth Token from www.twilio.com/cons
 def get_advice
   r = open('http://api.adviceslip.com/advice')
 
-  if r.status == 200
+  if r.status[0] == "200"
     doc = ""
+
     r.each do |line|
       doc << line
     end
 
     doc = JSON.parse(doc, :symbolize_names => true)
     advice = doc[:slip][:advice]
+
+
     return advice
   end
 
@@ -45,4 +48,4 @@ end
 
 
 
-send_MMS
+ send_MMS
